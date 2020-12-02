@@ -8,11 +8,22 @@ public class BeanUser {
 
     private final BeanB one;
     private final BeanB two;
+    private final BeanA oneA;
 
 
-    public BeanUser(@Qualifier("one_b") BeanB one, @Qualifier("two_b") BeanB two) {
+    public BeanUser(@Qualifier("one") BeanB one, @Qualifier("two") BeanB two, @Qualifier("one") BeanA oneA) {
         this.one = one;
         this.two = two;
-        System.out.println("Bean user injected: " + one + " and " + two);
+        this.oneA = oneA;
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        return "BeanUser{" +
+                "one=" + one +
+                ", two=" + two +
+                ", oneA=" + oneA +
+                '}';
     }
 }

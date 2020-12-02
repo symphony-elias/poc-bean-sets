@@ -7,4 +7,11 @@ public class BeanB {
         this.beanA = beanA;
         System.out.println("BeanB");
     }
+
+    @Override
+    public String toString() {
+        return "BeanB{" +
+                "beanA=" + beanA +
+                '}';
+    }
 }

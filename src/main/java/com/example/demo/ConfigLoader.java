@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AutowireCandidateQualifier;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
@@ -23,10 +25,12 @@ public class ConfigLoader implements BeanDefinitionRegistryPostProcessor {
             String beanNameB = configName + "_b";
             BeanDefinitionBuilder builderB = BeanDefinitionBuilder.genericBeanDefinition(BeanB.class)
                     .addConstructorArgReference(configName + "_a").setLazyInit(true);
+            builderB.getBeanDefinition().addQualifier(new AutowireCandidateQualifier(Qualifier.class, configName));
             registry.registerBeanDefinition(beanNameB, builderB.getBeanDefinition());
 
             String beanNameA = configName + "_a";
-            BeanDefinitionBuilder builderA = BeanDefinitionBuilder.genericBeanDefinition(BeanA.class).setLazyInit(true);
+            BeanDefinitionBuilder builderA = BeanDefinitionBuilder.genericBeanDefinition(BeanA.class).setLazyInit(true).addPropertyValue("field", beanNameA);
+            builderA.getBeanDefinition().addQualifier(new AutowireCandidateQualifier(Qualifier.class, configName));
             registry.registerBeanDefinition(beanNameA, builderA.getBeanDefinition());
         }
     }
