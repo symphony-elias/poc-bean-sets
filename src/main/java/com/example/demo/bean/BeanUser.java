@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.bean;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,6 @@ public class BeanUser {
     private final BeanB one;
     private final BeanB two;
     private final BeanA oneA;
-
 
     public BeanUser(@Qualifier("one") BeanB one, @Qualifier("two") BeanB two, @Qualifier("one") BeanA oneA) {
         this.one = one;

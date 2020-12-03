@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.bean.BeanA;
+import com.example.demo.bean.BeanB;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -24,7 +26,9 @@ public class ConfigLoader implements BeanDefinitionRegistryPostProcessor {
         for (String configName : this.configurations) {
             String beanNameB = configName + "_b";
             BeanDefinitionBuilder builderB = BeanDefinitionBuilder.genericBeanDefinition(BeanB.class)
-                    .addConstructorArgReference(configName + "_a").setLazyInit(true);
+                    .addConstructorArgReference(configName + "_a")
+                    .addConstructorArgReference("eventSender")
+                    .setInitMethodName("sendEvent").setLazyInit(true);
             builderB.getBeanDefinition().addQualifier(new AutowireCandidateQualifier(Qualifier.class, configName));
             registry.registerBeanDefinition(beanNameB, builderB.getBeanDefinition());
 
